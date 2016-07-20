@@ -17,3 +17,31 @@ class Result(db.Model):
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
+
+
+class User(db.Model):
+    __tablename__ = 'user'
+
+    id = db.Column(db.Integer, primary_key=True)
+    login = db.Column(db.String())
+    password = db.Column(db.String())
+    preferences = db.relationship("UserPreferences", backref="user")
+
+    def __init__(self, login, password):
+        self.login = login
+        self.password = password
+
+
+class UserPreferences(db.Model):
+    __tablename__ = 'user_preferences'
+
+    id = db.Column(db.Integer, primary_key=True)
+    console = db.Column(db.String())
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship("User", back_populates="preferences")
+
+    def __init__(self, console, user_id):
+        self.console = console
+        self.user_id = user_id
+
+
