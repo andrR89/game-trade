@@ -38,12 +38,7 @@ class UserPreferences(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     console = db.Column(db.String())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    user = db.relationship("User", back_populates="preferences")
 
     def __init__(self, console, user_id):
         self.console = console
         self.user_id = user_id
-
-
-
-
